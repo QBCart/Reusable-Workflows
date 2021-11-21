@@ -27,7 +27,7 @@ jobs:
     name: ${{ inputs.company }}
     runs-on: ubuntu-latest
 
-     ##############
+    ##############
     # Load Steps #
     ##############
     steps:
