@@ -10,7 +10,7 @@ jobs:
   ##############
   # Define Job #
   ##############
-  deploy-node-api:
+  github-release:
     name: ${{ github.ref }}
     runs-on: ubuntu-latest
 
