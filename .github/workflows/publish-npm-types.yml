@@ -53,6 +53,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       
+      ################
+      # Install Deps #
+      ################
+      - name: Install Deps
+        working-directory: .
+        shell: bash
+        run: npm install
+      
       ###############
       # Build Types #
       ###############
