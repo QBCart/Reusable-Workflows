@@ -3,12 +3,6 @@ name: Deploy Streaming Import
 on:
   workflow_call:
     inputs:
-      subscription:
-        required: true
-        type: string
-      storageName:
-        required: true
-        type: string
       containerName:
         required: true
         type: string
