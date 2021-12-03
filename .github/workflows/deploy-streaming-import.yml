@@ -15,6 +15,9 @@ on:
       contentCache:
         required: true
         type: string
+      buildFlags:
+        required: false
+        type: string
     secrets:
       AZURE_CREDENTIALS:
         required: true
@@ -66,7 +69,7 @@ jobs:
       - name: Build
         working-directory: .
         shell: bash
-        run: npm run build
+        run: npm run build ${{ inputs.buildFlags }}
       
       ###############
       # Azure Login #
