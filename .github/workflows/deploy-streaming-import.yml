@@ -3,6 +3,12 @@ name: Deploy Streaming Import
 on:
   workflow_call:
     inputs:
+      subscription:
+        required: true
+        type: string
+      storageName:
+        required: true
+        type: string
       containerName:
         required: true
         type: string
@@ -20,10 +26,6 @@ on:
         type: string
     secrets:
       AZURE_CREDENTIALS:
-        required: true
-      SUBSCRIPTION:
-        required: true
-      STORAGE_NAME:
         required: true
   
 ############
@@ -87,5 +89,5 @@ jobs:
         working-directory: .
         shell: bash
         run: |
-          az account set --subscription ${{ secrets.SUBSCRIPTION }}
-          az storage blob upload --account-name ${{ secrets.STORAGE_NAME }} --file '${{ inputs.src }}' --container-name '${{ inputs.containerName }}' --name '${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}'
+          az account set --subscription ${{ inputs.subscription }}
+          az storage blob upload --account-name ${{ inputs.storageName }} --file '${{ inputs.src }}' --container-name '${{ inputs.containerName }}' --name '${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}'
