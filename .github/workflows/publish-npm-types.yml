@@ -77,7 +77,7 @@ jobs:
         shell: bash
         run: |
           cp package.json publish_types
-          cp README.md publish_types
+          cp NPM.md publish_types/README.md
 
       #################
       # Publish Types #
