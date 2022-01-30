@@ -93,5 +93,5 @@ jobs:
         shell: bash
         run: |
           az account set --subscription ${{ inputs.subscription }}
-          az storage blob delete-batch --account-name ${{ inputs.storageName }} --source '${{ inputs.containerName }' --pattern '${{ inputs.deletePattern }'
-          az storage blob upload-batch --account-name ${{ inputs.storageName }} --source '${{ inputs.src }}' --destination '${{ inputs.containerName }/${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}'
+          az storage blob delete-batch --account-name ${{ inputs.storageName }} --source '${{ inputs.containerName }}' --pattern '${{ inputs.deletePattern }}'
+          az storage blob upload-batch --account-name ${{ inputs.storageName }} --source '${{ inputs.src }}' --destination '${{ inputs.containerName }}/${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}'
