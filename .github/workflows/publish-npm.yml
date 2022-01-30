@@ -1,0 +1,94 @@
+name: Publish NPM
+
+on:
+  workflow_call:
+    secrets:
+      NODE_AUTH_TOKEN:
+        required: true
+
+############
+# Set Jobs #
+############
+jobs:
+  ##############
+  # Define Job #
+  ##############
+  publish-npm:
+    name: ${{ github.repository }}
+    runs-on: ubuntu-latest
+
+    ##############
+    # Load Steps #
+    ##############
+    steps:
+      #################
+      # Checkout Code #
+      #################
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      ###############
+      # Get Version #
+      ###############
+      - name: Get Version
+        shell: bash
+        run: |
+          pattern="refs/heads/"
+          ver="${github_ref/$pattern/}"
+          echo $ver
+          echo "new_version=$ver" >> $GITHUB_ENV
+        env:
+          github_ref: ${{ github.ref }}
+      
+      ##############
+      # Setup Node #
+      ##############
+      - name: Setup Node
+        # Setup .npmrc file to publish to npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org
+          scope: '@qbcart'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      
+      ################
+      # Install Deps #
+      ################
+      - name: Install Deps
+        working-directory: .
+        shell: bash
+        run: npm install
+      
+      #################
+      # Build Package #
+      #################
+      - name: Build Package
+        working-directory: .
+        shell: bash
+        run: npm run build
+
+      ##############
+      # Copy Files #
+      ##############
+      - name: Copy Files
+        working-directory: .
+        shell: bash
+        run: |
+          cp package.json publish_esm
+          cp NPM.md publish_esm/README.md
+          cp LICENSE publish_esm
+
+      ##################
+      # Publish To NPM #
+      ##################
+      - name: Publish To NPM
+        working-directory: publish_esm
+        shell: bash
+        run: |
+          npm version $ver --allow-same-version
+          echo 'VER:' $ver
+          npm publish --access public
+        env:
+          ver: ${{ env.new_version }}
