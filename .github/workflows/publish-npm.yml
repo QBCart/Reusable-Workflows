@@ -2,6 +2,10 @@ name: Publish NPM
 
 on:
   workflow_call:
+    inputs:
+      dist:
+        required: true
+        type: string
     secrets:
       NODE_AUTH_TOKEN:
         required: true
@@ -76,15 +80,15 @@ jobs:
         working-directory: .
         shell: bash
         run: |
-          cp package.json publish_esm
-          cp NPM.md publish_esm/README.md
-          cp LICENSE publish_esm
+          cp package.json ${{ inputs.dist }}
+          cp NPM.md ${{ inputs.dist }}/README.md
+          cp LICENSE ${{ inputs.dist }}
 
       ##################
       # Publish To NPM #
       ##################
       - name: Publish To NPM
-        working-directory: publish_esm
+        working-directory: ${{ inputs.dist }}
         shell: bash
         run: |
           npm version $ver --allow-same-version
