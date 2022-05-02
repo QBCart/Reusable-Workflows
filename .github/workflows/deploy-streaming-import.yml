@@ -90,4 +90,4 @@ jobs:
         shell: bash
         run: |
           az account set --subscription ${{ inputs.subscription }}
-          az storage blob upload --account-name ${{ inputs.storageName }} --file '${{ inputs.src }}' --container-name '${{ inputs.containerName }}' --name '${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}'
+          az storage blob upload --account-name ${{ inputs.storageName }} --file '${{ inputs.src }}' --container-name '${{ inputs.containerName }}' --name '${{ inputs.dest }}' --auth-mode key --content-cache '${{ inputs.contentCache }}' --overwrite true
